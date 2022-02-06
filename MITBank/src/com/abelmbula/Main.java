@@ -1,5 +1,7 @@
 package com.abelmbula;
 
+import java.util.Scanner;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -19,19 +21,78 @@ public class Main {
 		System.out.println("*************************************************************");
 		System.out.println("BIENVENUE CHEZ MITBANK !");
 		System.out.println("*************************************************************");
-		account.display();
 		
-		// deposit
-		account.deposit(1, 24.0);
-		account.deposit(3, 14.0);
+		Scanner scanner = new Scanner(System.in);
+		int choice;
 		
-		//withdrow
-		account.withdrow(3, 5.5);
+		while (true) {
+			System.out.println("1. Ouvrir un compte client");
+			System.out.println("2. Faire un versement sur compte");
+			System.out.println("3. Faire un retrait sur compte");
+			System.out.println("4. Afficher la liste des clients");
+			System.out.println("0. Quitter le programme");
+			
+			choice = scanner.nextInt();
+			
+			// New client
+			if (choice == 1) {
+				System.out.println("Ouverture de compte");
+				System.out.println("--------------------");
+				System.out.print("Entrer le prenom du client : ");
+				String firstName = scanner.next();
+				System.out.print("Entrer le nom du client : ");
+				String lastName = scanner.next();
+				System.out.print("Entrer le montant initial (ex.: 200) : ");
+				double amount = scanner.nextDouble();
+				
+				account.addClient(new Client(firstName, lastName, amount));
+				
+				System.out.println("Compte creer avec succes!");
+			}
+			
+			// Deposit
+			if (choice == 2) {
+				System.out.println("Versement sur compte");
+				System.out.println("--------------------");
+				System.out.print("Entrer l'ID du client : ");
+				int clientId = scanner.nextInt();
+				System.out.print("Entrer le montant (ex.: 200) : ");
+				double amount = scanner.nextDouble();
+				
+				// do deposit
+				if (account.deposit(clientId, amount))
+					System.out.println("Versement effectue avec succes!");
+				
+			}
+			
+			// Withdraw money as per user request
+			if (choice == 3) {
+				System.out.println("Retrait sur compte");
+				System.out.println("--------------------");
+				System.out.print("Entrer l'ID du client : ");
+				int clientId = scanner.nextInt();
+				System.out.print("Entrer le montant (ex.: 200) : ");
+				double amount = scanner.nextDouble();
+				
+				// withdraw
+				if (account.withdrow(clientId, amount))
+					System.out.println("Operation effectuee avec succes!");
+				
+			}
+			
+			// Display clients
+			if (choice == 4)
+				account.display();
+			
+			if (choice == 0)
+				break;
+		}
 		
-		account.display();
+		System.out.println("Merci d'avoir utilise le systeme MITBank.");
 		
 	}
-
+	
+//	scanner.close();
 }
 
 

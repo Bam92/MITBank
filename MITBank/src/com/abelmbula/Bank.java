@@ -19,32 +19,43 @@ public class Bank {
 	 * @param id client id
 	 * @param amount deposit amount
 	 */
-	public void deposit(int id, double amount) {
+	public boolean deposit(int id, double amount) {
 		try {
 			Client currentClient = clients.get(id - 1);			
 			double currentSolde = currentClient.getSolde();
 			currentClient.setsolde(currentSolde + amount);
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("Client does not exist. Try again, please!");
+			
+			return false;
 		}
+		
+		return true;
 	}
 	
 	/**
-	 * Withdrow money
+	 * Withdraw money
 	 * @param id client id
 	 * @param amount withdrow amount
 	 */
-	public void withdrow(int id, double amount) {
+	public boolean withdrow(int id, double amount) {
 		try {
 			Client currentClient = clients.get(id - 1);			
 			double currentSolde = currentClient.getSolde();
 			
-			if (currentSolde < amount) System.out.println("Votre solde actuel ne permet pas de faire le retrait de ce montant");
+			if (currentSolde < amount) {
+				System.out.println("Votre solde actuel ne permet pas de faire le retrait de ce montant");
+				
+				return false;
+			}
 			else 
 				currentClient.setsolde(currentSolde - amount);
 		} catch (IndexOutOfBoundsException e) {
 			System.err.println("Client does not exist. Try again, please!");
+			return false;
 		}
+		
+		return true;
 	}
 	
 	public void display() {
