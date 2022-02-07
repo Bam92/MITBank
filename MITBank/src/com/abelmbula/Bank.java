@@ -10,6 +10,10 @@ public class Bank {
 		clients = new ArrayList<Client>();
 	}
 	
+	/**
+	 * addClient appends the provided client names at the end of the list
+	 * @param newClient
+	 */
 	public void addClient(Client newClient) {
 		clients.add(newClient);
 	}
@@ -38,7 +42,7 @@ public class Bank {
 	 * @param id client id
 	 * @param amount withdrow amount
 	 */
-	public boolean withdrow(int id, double amount) {
+	public boolean withdraw(int id, double amount) {
 		try {
 			Client currentClient = clients.get(id - 1);			
 			double currentSolde = currentClient.getSolde();

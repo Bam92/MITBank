@@ -13,13 +13,6 @@ public class Client {
 		this.solde = solde;
 	}
 	
-	/**
-	 * addClient appends the provided client names at the end of the list
-	 * @param firsName
-	 * @param lastName
-	 */
-
-	
 	public String getFirstName() {
 		return firstName;
 	}

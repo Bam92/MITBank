@@ -5,6 +5,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
+		// Initial data
 		Client abel = new Client("Abel", "Mbula", 0d);
 		Client patience = new Client("Patience", "Kavira", 20d);
 		Client jean = new Client("Jean", "LaCombe", 0d);
@@ -22,78 +23,68 @@ public class Main {
 		System.out.println("BIENVENUE CHEZ MITBANK !");
 		System.out.println("*************************************************************");
 		
-		Scanner scanner = new Scanner(System.in);
-		int choice;
-		
 		while (true) {
+			// Menu
 			System.out.println("1. Ouvrir un compte client");
 			System.out.println("2. Faire un versement sur compte");
 			System.out.println("3. Faire un retrait sur compte");
 			System.out.println("4. Afficher la liste des clients");
 			System.out.println("0. Quitter le programme");
 			
-			choice = scanner.nextInt();
+			Scanner scanner = new Scanner(System.in);
+			byte choice = scanner.nextByte();
+			double amount;
+			int clientId;
 			
-			// New client
-			if (choice == 1) {
+			switch (choice) {
+			case 1: // New client
 				System.out.println("Ouverture de compte");
 				System.out.println("--------------------");
 				System.out.print("Entrer le prenom du client : ");
 				String firstName = scanner.next();
 				System.out.print("Entrer le nom du client : ");
 				String lastName = scanner.next();
-				System.out.print("Entrer le montant initial (ex.: 200) : ");
-				double amount = scanner.nextDouble();
+				final double INITIAL_AMOUNT = 0.0;
 				
-				account.addClient(new Client(firstName, lastName, amount));
+				account.addClient(new Client(firstName, lastName, INITIAL_AMOUNT));
 				
-				System.out.println("Compte creer avec succes!");
-			}
+				System.out.println("Compte cree avec succes!");
+				break;
 			
-			// Deposit
-			if (choice == 2) {
+			case 2: // Deposit
 				System.out.println("Versement sur compte");
 				System.out.println("--------------------");
 				System.out.print("Entrer l'ID du client : ");
-				int clientId = scanner.nextInt();
+				clientId = scanner.nextInt();
 				System.out.print("Entrer le montant (ex.: 200) : ");
-				double amount = scanner.nextDouble();
+				amount = scanner.nextDouble();
 				
 				// do deposit
 				if (account.deposit(clientId, amount))
 					System.out.println("Versement effectue avec succes!");
+				break;
 				
-			}
-			
-			// Withdraw money as per user request
-			if (choice == 3) {
+			case 3: // Withdraw money as per user request
 				System.out.println("Retrait sur compte");
 				System.out.println("--------------------");
 				System.out.print("Entrer l'ID du client : ");
-				int clientId = scanner.nextInt();
+				clientId = scanner.nextInt();
 				System.out.print("Entrer le montant (ex.: 200) : ");
-				double amount = scanner.nextDouble();
+				amount = scanner.nextDouble();
 				
 				// withdraw
-				if (account.withdrow(clientId, amount))
+				if (account.withdraw(clientId, amount))
 					System.out.println("Operation effectuee avec succes!");
-				
-			}
-			
-			// Display clients
-			if (choice == 4)
-				account.display();
-			
-			if (choice == 0)
 				break;
-		}
-		
-		System.out.println("Merci d'avoir utilise le systeme MITBank.");
-		
+			case 4: // Show clients list
+				account.display();
+				break;
+				
+			default:
+				System.out.println("Merci d'avoir utilise le systeme MITBank.");
+				System.exit(0); // shutdown the JVM: 0: normal 1: error
+				scanner.close();
+			}
+		}	
 	}
-	
-//	scanner.close();
 }
-
-
-// https://stackoverflow.com/questions/33455789/nullpointerexception-when-adding-object-to-arraylist
